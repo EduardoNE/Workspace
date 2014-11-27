@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Barra da Tijuca</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/appbarra.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+    $(function() {
+        $.getJSON( "http://www.barradatijuca.com.br/APP/instagram/", function( data ) {
+          var items = [];
+          $.each( data, function( key, val ) {
+            
+            //console.log(val);
+            items.push( '<div class="col-xs-4 imginsta" style="margin-top:10px;">'+
+                            '<img style="width:100%;" src="'+val.images.low_resolution.url+'" />'+
+                        '</div>' );
+            
+          });
+         
+          $( "<div/>", {
+            "class": "row",
+            html: items.join( "" )
+          }).appendTo( ".js-instagram" );
+        //*/
+        });
+    });
+    </script>
+
+</head>
+
+<body>
+
+    <!-- Navigation --> <!-- altura 44px -->
+    <nav class="navbar navbar-fixed-top text-center" role="navigation">
+        <div class="statusbar"></div> <!-- altura 20px -->
+        <div class="header">
+            <div class="container">
+                <img src="images/logo-barra.png" class="logo" />
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Carousel -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- BOLINHAS 
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        -->
+
+        <!-- SLIDES -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="fill" style="background-image:url('images/slide1.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>Arctic Monkeys</h2>
+                </div>
+            </div>
+            <div class="item">
+                <div class="fill" style="background-image:url('images/slide2.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>Night Run</h2>
+                </div>
+            </div>
+            <div class="item">
+                <div class="fill" style="background-image:url('images/slide3.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>Paulo Gustavo</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETAS 
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+        -->
+    </header>
+
+    <!-- Page Content -->
+    <div id="home" class="container">
+
+        <!-- MENU -->
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="menu guia">
+                    <a href="guia.html">
+                        <img src="images/icone-guia.png" />
+                        <h2>Guia</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu agenda">
+                    <a href="agenda.html">
+                        <img src="images/icone-agenda.png" />
+                        <h2>Agenda</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu noticias">
+                    <a href="#">
+                        <img src="images/icone-noticias.png" />
+                        <h2>Notícias</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="menu delivery">
+                    <a href="delivery.html">
+                        <img src="images/icone-delivery.png" />
+                        <h2>Delivery</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu tempo">
+                    <a href="tempo.html">
+                        <img src="images/icone-tempo.png" />
+                        <h2>Tempo</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu transportes">
+                    <a href="transporte.html">
+                        <img src="images/icone-transportes.png" />
+                        <h2>Transportes</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="menu sos">
+                    <a href="sos.html">
+                        <img src="images/icone-sos.png" />
+                        <h2>SOS</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu instabarra">
+                    <a href="instabarra.html">
+                        <img src="images/icone-instabarra.png" />
+                        <h2>InstaBarra</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu transito">
+                    <a href="ultimas-rotas.html">
+                        <img src="images/icone-transito.png" />
+                        <h2>Trânsito</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <div id="toolbar">
+        <div class="bt minha-barra">
+            <a href="#">
+                <img src="images/bt-home.png" />
+                <h3>Home</h3>
+            </a>
+        </div>
+        <div class="bt sugestao">
+            <a href="#">
+                <img src="images/bt-sugestao.png" />
+                <h3>Trânsito</h3>
+            </a>
+        </div>
+        <div class="bt ao-vivo">
+            <a href="#">
+                <img src="images/bt-ao-vivo.png" />
+                <h3>Ao Vivo</h3>
+            </a>
+        </div>
+        <div class="bt favoritos">
+            <a href="#">
+                <img src="images/bt-favoritos.png" />
+                <h3>Favoritos</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+
+</body>
+
+</html>
