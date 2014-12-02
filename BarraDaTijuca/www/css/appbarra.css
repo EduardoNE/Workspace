@@ -352,6 +352,35 @@ body.bhome {
     font-weight: bold;
 }
 
+/* ----------------------------------
+ TRANSPORTE 
+ --------------------------------- */
+
+.adp{
+    text-align: center;
+}
+
+.adp-directions,.adp-summary{
+    width: 100%;
+}
+
+.warnbox-content {
+background: aliceblue;
+}
+
+.warnbox-c2,.warnbox-c2{
+    display: none;
+}
+
+.adp-placemark{
+
+     background: aliceblue; 
+     border: 0px solid; 
+}
+
+.adp-placemark td{
+     padding: 10px;
+}
 
 /* ----------------------------------
  ANUNCIANTE 

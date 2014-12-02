@@ -21,12 +21,25 @@
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script src="js/jquery-1.11.0.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script>    
+        $( document ).ready(function() {
+            $.getJSON( "http://www.barradatijuca.com.br/api/get_category_index/?parent=26", function( data ) {
+
+                    console.log(data);
+            });
+            
+        });
+    </script>
 
 </head>
 
@@ -59,7 +72,7 @@
         <div class="row guia">
             <div class="col-xs-4">
                 <div class="menu guia">
-                    <a href="guia.html">
+                    <a href="#">
                         <img src="images/guia-comercio.svg" />
                         <h2>Comércio</h2>
                     </a>
@@ -67,7 +80,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu agenda">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-servicos.svg" />
                         <h2>Serviços</h2>
                     </a>
@@ -75,7 +88,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu noticias">
-                    <a href="agenda.html">
+                    <a href="guiaSubcategoria.html?id=26">
                         <img src="images/guia-saude.svg" />
                         <h2>Saúde</h2>
                     </a>
@@ -85,7 +98,7 @@
         <div class="row guia">
             <div class="col-xs-4">
                 <div class="menu delivery">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-gastronomia.svg" />
                         <h2>Gastronomia</h2>
                     </a>
@@ -93,7 +106,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu turismo">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-turismo.svg" />
                         <h2>Turismo</h2>
                     </a>
@@ -101,7 +114,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu transportes">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-imoveis.svg" />
                         <h2>Imóveis</h2>
                     </a>
@@ -111,7 +124,7 @@
         <div class="row guia">
             <div class="col-xs-4">
                 <div class="menu sos">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-beleza.svg" />
                         <h2>Beleza</h2>
                     </a>
@@ -119,7 +132,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu instabarra">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-educacao.svg" />
                         <h2>Educação</h2>
                     </a>
@@ -127,7 +140,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu transito">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-lazer.svg" />
                         <h2>Lazer</h2>
                     </a>
@@ -137,7 +150,7 @@
         <div class="row guia">
             <div class="col-xs-4">
                 <div class="menu transito">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-automoveis.svg" />
                         <h2>Automóveis</h2>
                     </a>
@@ -145,7 +158,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu transito">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-eventos.svg" />
                         <h2>Eventos</h2>
                     </a>
@@ -153,7 +166,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu transito">
-                    <a href="agenda.html">
+                    <a href="#">
                         <img src="images/guia-delivery.svg" />
                         <h2>Delivery</h2>
                     </a>
