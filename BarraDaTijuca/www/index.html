@@ -29,28 +29,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script>
-    $(function() {
-        $.getJSON( "http://www.barradatijuca.com.br/APP/instagram/", function( data ) {
-          var items = [];
-          $.each( data, function( key, val ) {
-            
-            //console.log(val);
-            items.push( '<div class="col-xs-4 imginsta" style="margin-top:10px;">'+
-                            '<img style="width:100%;" src="'+val.images.low_resolution.url+'" />'+
-                        '</div>' );
-            
-          });
-         
-          $( "<div/>", {
-            "class": "row",
-            html: items.join( "" )
-          }).appendTo( ".js-instagram" );
-        //*/
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -130,7 +108,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu noticias">
-                    <a href="#">
+                    <a href="noticias.html">
                         <img src="images/icone-noticias.png" />
                         <h2>Notícias</h2>
                     </a>
@@ -197,25 +175,25 @@
     <!-- Footer -->
     <div id="toolbar">
         <div class="bt minha-barra">
-            <a href="#">
+            <a href="index.html">
                 <img src="images/bt-home.png" />
                 <h3>Home</h3>
             </a>
         </div>
         <div class="bt sugestao">
-            <a href="#">
+            <a href="ultimas-rotas.html">
                 <img src="images/bt-sugestao.png" />
                 <h3>Trânsito</h3>
             </a>
         </div>
         <div class="bt ao-vivo">
-            <a href="#">
+            <a href="aovivo.html">
                 <img src="images/bt-ao-vivo.png" />
                 <h3>Ao Vivo</h3>
             </a>
         </div>
         <div class="bt favoritos">
-            <a href="#">
+            <a href="favoritos.html">
                 <img src="images/bt-favoritos.png" />
                 <h3>Favoritos</h3>
             </a>

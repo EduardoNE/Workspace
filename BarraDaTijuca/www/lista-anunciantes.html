@@ -35,6 +35,7 @@
               $( ".js-title" ).html(data.category.title);
               $( ".loading" ).remove();
               var items = [];
+              console.log(data);
               $.each($(data.posts), function( key, val ) {
                 console.log(val);
 
@@ -42,11 +43,11 @@
                 anuncio += '<div class="item-lista-anunciante clearfix">'+
                 
                             '<div class="img-empresa">'+
-                                '<a href="#">';
+                                '<a href="anunciante.html?id='+val.id+'">';
                                         
                                 var count = 0;
-                if(val.attachments.length > 0)
-                   anuncio += '<img src="'+val.attachments[0].images.large.url+'" />';
+                if(typeof val.ImagemP.url[3] !== 'undefined')
+                   anuncio += '<img src="'+val.ImagemP.url[0]+'" />';
                 else
                    anuncio += '<img src="images/anuncios.jpg" />';
 
@@ -54,7 +55,7 @@
                         '</div>'+
                                 
                                 '<div class="infos">'+
-                                    '<a href="#"><h2>'+val.title+'</h2></a>'+
+                                    '<a href="anunciante.html?id='+val.id+'"><h2>'+val.title+'</h2></a>'+
                                     '<div class="bts">';
 
                                         if(typeof val.custom_fields.telefone !== 'undefined'){
@@ -67,14 +68,14 @@
                                         }
 
                                         if(typeof val.custom_fields.cp_google !== 'undefined'){ 
-                                            anuncio += '<a href="mapa.html?id='+val.id+'" class="bt-action"><img src="images/mapa.svg" /></a>';
+                                            anuncio += '<a href="mapa.html?addr='+val.custom_fields.cp_google+'" class="bt-action"><img src="images/mapa.svg" /></a>';
                                         }
                                         else{
                                         count++;
                                         anuncio += '';
                                         }
 
-                                        if(typeof val.custom_fields.url_site !== 'undefined' && val.custom_fields.url_site != 'http://' && val.custom_fields.url_site != 'http://www.barradatijuca.com.br/')
+                                        if(typeof val.custom_fields.url_site !== 'undefined' && val.custom_fields.url_site != 'http://' && val.custom_fields.url_site != 'http://www.barradatijuca.com.br/' && val.custom_fields.url_site[0].indexOf("http://") != -1)
                                         anuncio += '<a onclick="window.open(\' '+val.custom_fields.url_site+' \', \'_system\');" class="bt-action"><img src="images/site.svg" /></a>';
                                         else{
                                         count++;
@@ -108,19 +109,7 @@
         });
     </script>
     <script type="text/javascript">
-        function getGeo(addr){
-                var LatLng = "";
-                var geocoder = new google.maps.Geocoder();
-                var geocoderRequest = { address: addr };
-                geocoder.geocode(geocoderRequest, function(results, status){  
-                    // | k = latitude | b = longitude |
-                    LatLng = results[0].geometry.location.k+','+results[0].geometry.location.B;
-                    
-                    return LatLng;
-                });
-
-                
-        }
+        
         function GetURLParameter(sParam){
             var sPageURL = window.location.search.substring(1);
             var sURLVariables = sPageURL.split('&');
@@ -166,28 +155,8 @@
     <!-- LISTA DE FAVORITOS -->
     <div class="content js-insert">
 
-        <div id="lista-anunciantes" class="container ">
         
-            <div class="item-lista-anunciante clearfix">
-                
-                <div class="img-empresa">
-                    <a href="#">
-                        <img src="images/img-empresa.png" />
-                    </a>
-                </div>
-                <div class="infos">
-                    <a href="#"><h2>Bar da Budweiser</h2></a>
-                    <div class="bts">
-                        <a href="#" class="bt-action"><img src="images/telefone.svg" /></a>
-                        <a href="#" class="bt-action"><img src="images/mapa.svg" /></a>
-                        <a href="#" class="bt-action"><img src="images/site.svg" /></a>
-                    </div>
-                </div>
-
-            </div>
-
-            <hr>
-        </div>
+       
 
 
     </div>
@@ -195,26 +164,26 @@
 
     <!-- Footer -->
     <div id="toolbar">
-        <div class="bt home">
-            <a href="#">
+        <div class="bt minha-barra">
+            <a href="index.html">
                 <img src="images/bt-home.png" />
                 <h3>Home</h3>
             </a>
         </div>
         <div class="bt sugestao">
-            <a href="#">
+            <a href="ultimas-rotas.html">
                 <img src="images/bt-sugestao.png" />
                 <h3>Trânsito</h3>
             </a>
         </div>
         <div class="bt ao-vivo">
-            <a href="#">
+            <a href="aovivo.html">
                 <img src="images/bt-ao-vivo.png" />
                 <h3>Ao Vivo</h3>
             </a>
         </div>
         <div class="bt favoritos">
-            <a href="#">
+            <a href="favoritos.html">
                 <img src="images/bt-favoritos.png" />
                 <h3>Favoritos</h3>
             </a>

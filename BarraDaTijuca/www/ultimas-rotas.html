@@ -1,6 +1,4 @@
-<!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -24,6 +22,7 @@
     <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=true&libraries=places&language=pt_br"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/LocalStorageFunctions.js"></script>
 
 
     <script>
@@ -32,36 +31,14 @@
         var map;
         var directions = [];
 
-        /*
-        directionsArray[0] = [];
-        directionsArray[0]['from'] = "Avenida Malibu, 968-1078 - Barra da Tijuca, Rio de Janeiro - RJ, 22793-295, República Federativa do Brasil";
-        directionsArray[0][ 'to' ] = "Rua Florianópolis, Praça Seca, Rio de Janeiro, República Federativa do Brasil";
-        directionsArray[0]['mode'] = "DRIVING";
-
-        directionsArray[1] = [];
-        directionsArray[1]['from'] = "Av. das Américas, 500, Barra da Tijuca, Rio de Janeiro, República Federativa do Brasil";
-        directionsArray[1][ 'to' ] = "Av. das Américas, 5000, Barra da Tijuca, Rio de Janeiro, República Federativa do Brasil";
-        directionsArray[1]['mode'] = "DRIVING";
-        //*/
-
         document.addEventListener("deviceready", onDeviceReady, false);
 
     // Cordova is ready
     //
         function onDeviceReady() {
-            //window.localStorage.setItem("time-directions", "time-directions");
-            //var keyname = window.localStorage.key(i);
-            // keyname is now equal to "key"
-            //var value = window.localStorage.getItem("time-directions");
-            // value is now equal to "value"
-            //window.localStorage.removeItem("time-directions");
+            startLS("time-directions",0);
+            var directions = getLS("time-directions");
 
-            //console.log(value);
-            
-            //window.localStorage.clear();
-            // localStorage is now empty
-
-            var directions = window.localStorage.getItem("time-directions");
             initialize(directions);
         }
 
@@ -80,6 +57,7 @@
           directionsDisplay.setMap(map);
           //console.log("4-----------------------");
           veryfyDirectonsSaved(directions);
+
         }
 
        var calcRoute = function (start,end,mode) {
@@ -91,6 +69,12 @@
           };
           directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
+
+                if(mode == 'DRIVING')       mode = 'Dirigindo';
+                else if(mode == 'WALKING')  mode = 'Andando';
+                else if(mode == 'TRANSIT')  mode = 'Transporte Público';
+
+
               items.push('<div class="row item-rota">'+
                     '<div class="col-xs-1 pin">'+
                         '<img src="images/pin-rotas.png" />'+
@@ -117,11 +101,7 @@
               $(".InfoBlock").remove();
 
         }
-        function veryfyDirectonsSaved(directionsJson){
-            //console.log("5-----------------------");
-            var directionsArray = JSON.parse(directionsJson);
-            console.log( directionsJson );
-            
+        function veryfyDirectonsSaved(directionsArray){
 
             if(directionsArray.length > 0){
                 //console.log("--------- if ----------");
@@ -211,26 +191,26 @@
     </div>
     <!-- Footer -->
     <div id="toolbar">
-        <div class="bt home">
-            <a href="#">
+        <div class="bt minha-barra">
+            <a href="index.html">
                 <img src="images/bt-home.png" />
                 <h3>Home</h3>
             </a>
         </div>
         <div class="bt sugestao">
-            <a href="#">
+            <a href="ultimas-rotas.html">
                 <img src="images/bt-sugestao.png" />
                 <h3>Trânsito</h3>
             </a>
         </div>
         <div class="bt ao-vivo">
-            <a href="#">
+            <a href="aovivo.html">
                 <img src="images/bt-ao-vivo.png" />
                 <h3>Ao Vivo</h3>
             </a>
         </div>
         <div class="bt favoritos">
-            <a href="#">
+            <a href="favoritos.html">
                 <img src="images/bt-favoritos.png" />
                 <h3>Favoritos</h3>
             </a>

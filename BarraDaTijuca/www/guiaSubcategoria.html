@@ -47,24 +47,7 @@
                 html: items.join( "" )
               }).appendTo( ".js-insert" );
             });
-/*
-        <div id="lista-agenda" class="container ">
-        
-            <div class="row item-lista-agenda">
-                <div class="col-xs-12 infos">
-                    <div class="nome-agenda">
-                        <a href="#"><h2>Paulo Gustavo</h2></a>
-                    </div>
-                    <div class="local-agenda">
-                        <p>Teatro Bradesco no Village Mall</p>
-                    </div>
-                </div>
-            
-            </div>
 
-            <hr>
-        </div>
-*/
             $( '.links-externo' ).on( 'click', 'a',function(event) {
                 event.preventDefault();
                 window.open($(this).attr('href'),'_system');
@@ -123,26 +106,26 @@
 
     <!-- Footer -->
     <div id="toolbar">
-        <div class="bt home">
-            <a href="#">
+        <div class="bt minha-barra">
+            <a href="index.html">
                 <img src="images/bt-home.png" />
                 <h3>Home</h3>
             </a>
         </div>
         <div class="bt sugestao">
-            <a href="#">
+            <a href="ultimas-rotas.html">
                 <img src="images/bt-sugestao.png" />
                 <h3>Trânsito</h3>
             </a>
         </div>
         <div class="bt ao-vivo">
-            <a href="#">
+            <a href="aovivo.html">
                 <img src="images/bt-ao-vivo.png" />
                 <h3>Ao Vivo</h3>
             </a>
         </div>
         <div class="bt favoritos">
-            <a href="#">
+            <a href="favoritos.html">
                 <img src="images/bt-favoritos.png" />
                 <h3>Favoritos</h3>
             </a>

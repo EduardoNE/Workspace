@@ -20,13 +20,102 @@
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/LocalStorageFunctions.js"></script>
+    <script src="js/jquery-1.11.0.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script type="text/javascript">
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++){
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam){
+                    return sParameterName[1];
+                }
+            }
+        }
+    </script>
+    
+    <script type="text/javascript"> 
+
+        $( document ).ready(function() {
+
+            $.getJSON("http://www.barradatijuca.com.br/api/get_post/?id="+ GetURLParameter("id"), function( data ) {
+                var post = data.post;
+                console.log(post);
+                var favoritado = startLS("favoritos",post.id);
+
+                if(favoritado)
+                    $(".js-desfavoritar").css('display','block');
+                else
+                    $(".js-favoritar").css('display','block');
+
+                
+                $(".js-img").attr("src",post.ImagemP.url[0]);
+                $(".js-desc").html(post.content);
+                $(".js-title").html(post.title); //&#187;
+                $(".js-bread").html(post.categories[0].title);
+
+                if(typeof post.custom_fields.telefone !== 'undefined'){
+
+                    var tels = post.custom_fields.telefone.toString().replace(" ","").replace(")","").replace("(","0").replace("-","").split(",");
+                    $(".js-tel a").attr("href","tel:"+tels[0]);
+                    $(".js-tel").css('display','block');
+                }
+
+                if(typeof post.custom_fields.url_site !== 'undefined' && post.custom_fields.url_site[0].indexOf("http://") != -1){
+
+                    $(".js-site a").attr("href",post.custom_fields.url_site[0]);
+                    $(".js-site").css('display','block');
+                }
+
+                if(typeof post.custom_fields.email !== 'undefined' ){
+
+                    $(".js-mens a").attr("href","mail:"+post.custom_fields.email[0]);
+                    $(".js-mens").css('display','block');
+                }
+
+                if(typeof post.custom_fields.cp_google !== 'undefined'){
+
+                    $(".js-end a").attr("href",'mapa.html?addr='+post.custom_fields.cp_google);
+                    $(".js-end").css('display','block');
+
+                }
+
+                if(typeof post.custom_fields.cp_cupom !== 'undefined'){
+
+                    //$(".js-end a").attr("href",'mapa.html?addr='+post.custom_fields.cp_google);
+                    $(".js-cupoms").css('display','block');
+
+                }
+
+                if(typeof post.custom_fields.cp_cupom !== 'undefined' && post.custom_fields.cp_cupom[0] !=0){
+                    
+                    //$(".js-end a").attr("href",'mapa.html?addr='+post.custom_fields.cp_google);
+                    $(".js-cupoms").css('display','block');
+
+                }
+
+                $('.js-favoritar').click(function() {
+                  $(".js-favoritar").css('display','none');
+                  $(".js-desfavoritar").css('display','block');
+
+                  saveLS("favoritos",post.id);
+                });
+
+                $('.js-desfavoritar').click(function() {
+                  $(".js-desfavoritar").css('display','none');
+                  $(".js-favoritar").css('display','block');
+
+                  removeLS("favoritos",post.id);
+                });
+
+
+
+            });
+        });
+    </script>
 
 </head>
 
@@ -50,7 +139,7 @@
         </div>
         <!-- Barra de Navegação -->
         <div class="breadcrump">
-            <div class="container">
+            <div class="container js-bread">
                 Gastronomia &#187; Restaurantes &#187; Bares
             </div>
         </div>
@@ -63,10 +152,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h1>Bar da Budweiser</h2>
-                    <a href="#" class="pull-right bt-favorito">
+                    <h1 class="js-title">Bar da Budweiser</h2>
+                    <a href="javascript:void(0);" style="display:none;" class="pull-right bt-favorito js-favoritar">
                         <img src="images/estrela.svg" />
-                        <!--<img src="images/estrela-favoritada.svg" />-->
+                    </a>
+                    <a href="javascript:void(0);" style="display:none;" class="pull-right bt-favorito js-desfavoritar">
+                        <img src="images/estrela-favoritada.svg" />
                     </a>
                 </div>
             </div>
@@ -80,7 +171,7 @@
 
         <div class="container">
             <div class="row">
-                <img src="images/img-anunciante.jpg" />
+                <img class="js-img" src="images/img-anunciante.jpg" />
             </div>
         </div>
 
@@ -90,8 +181,8 @@
     <!-- DESCRICAO -->
     <div class="desc-anunciante">
 
-        <div class="container">
-            Com a proposta de oferecer aos cariocas, um espaço para o pré e pós noite, o Bar da Bud inaugurou em maio de 2012 na movimentada Avenida Armando Lombardi, na Barra da Tijuca e é o primeiro estabelecimento da cervejaria americana Budweiser.
+        <div class="container js-desc">
+            
         </div>
 
     </div>
@@ -103,34 +194,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="bt-acao">
+                    <div class="bt-acao js-tel" style="display:none;">
                         <a href="#">
                             <img src="images/telefone.svg" /> Ligar
                         </a>
                     </div>
-                    <div class="bt-acao">
+                    <div class="bt-acao js-site" style="display:none;">
                         <a href="#">
                             <img src="images/site.svg" /> Site
                         </a>
                     </div>
-                    <div class="bt-acao">
+                    <div class="bt-acao js-face" style="display:none;">
                         <a href="#">
                             <img src="images/facebook.svg" /> Facebook
                         </a>
                     </div>
                 </div>
                 <div class="col-xs-6">
-                    <div class="bt-acao">
+                    <div class="bt-acao js-end" style="display:none;">
                         <a href="#">
                             <img src="images/mapa.svg" /> Endereço
                         </a>
                     </div>
-                    <div class="bt-acao">
+                    <div class="bt-acao js-mens" style="display:none;">
                         <a href="#">
                             <img src="images/email.svg" /> Mensagem
                         </a>
                     </div>
-                    <div class="bt-acao">
+                    <div class="bt-acao js-inst" style="display:none;">
                         <a href="#">
                             <img src="images/instagram.svg" /> Instagram
                         </a>
@@ -148,12 +239,12 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-xs-6 horario">
+                <div class="col-xs-6 horario js-horario" style="display:none;">
                     <div class="relogio"><img src="images/relogio.png" /></div>
                     <div><p>Seg a Sex: 07h às 00h<br />
                         Sab e Dom: 08h às 12h</p></div>
                 </div>
-                <div class="col-xs-6 cupom">
+                <div class="col-xs-6 cupom js-cupom" style="display:none;">
                     <img src="images/cupom.png" />
                 </div>
             </div>
@@ -165,26 +256,26 @@
 
     <!-- Footer -->
     <div id="toolbar">
-        <div class="bt home">
-            <a href="#">
+        <div class="bt minha-barra">
+            <a href="index.html">
                 <img src="images/bt-home.png" />
                 <h3>Home</h3>
             </a>
         </div>
         <div class="bt sugestao">
-            <a href="#">
+            <a href="ultimas-rotas.html">
                 <img src="images/bt-sugestao.png" />
                 <h3>Trânsito</h3>
             </a>
         </div>
         <div class="bt ao-vivo">
-            <a href="#">
+            <a href="aovivo.html">
                 <img src="images/bt-ao-vivo.png" />
                 <h3>Ao Vivo</h3>
             </a>
         </div>
         <div class="bt favoritos">
-            <a href="#">
+            <a href="favoritos.html">
                 <img src="images/bt-favoritos.png" />
                 <h3>Favoritos</h3>
             </a>

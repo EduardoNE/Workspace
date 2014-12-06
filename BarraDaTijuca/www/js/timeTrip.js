@@ -8,7 +8,7 @@
                 directionsService;
 
                 function initialize(lat, lon){   
-                  //alert('initialize');
+                startLS("time-directions");
                 trafficLayerD = new google.maps.TrafficLayer();
                 geocoder = new google.maps.Geocoder();
                 directionsDisplay = new google.maps.DirectionsRenderer(); 
@@ -33,7 +33,7 @@
 
                 directionsDisplay.setMap(map);
                 trafficLayerD.setMap(map);
-                 var currentPositionMarker = new google.maps.Marker({
+                var currentPositionMarker = new google.maps.Marker({
                     position: currentPosition,
                     map: map,
                     title: "Current position"
@@ -65,23 +65,16 @@
 
               var da = [];
 
-              if(window.localStorage.getItem("time-directions") == null)
-              window.localStorage.setItem("time-directions", JSON.stringify(da));
-
-
-              var tester = window.localStorage.getItem("time-directions");
               
-              if(tester.length > 0)
-                da = JSON.parse(window.localStorage.getItem("time-directions"));
 
-              var num = da.length;
-              da[num] = [];
 
-              da[num][0] = $("#mode").val();
-              da[num][1] = $("#origem").val();
-              da[num][2] = $("#destino").val();
+              da = [];
+
+              da[0] = $("#mode").val();
+              da[1] = $("#origem").val();
+              da[2] = $("#destino").val();
               console.log(da);
-              window.localStorage.setItem("time-directions", JSON.stringify(da).replace(",[]",""));
+              saveLS("time-directions",da);
               /*
               da[0] = [];
               da[0]['from'] = "Avenida Malibu, 968-1078 - Barra da Tijuca, Rio de Janeiro - RJ, 22793-295, República Federativa do Brasil";
