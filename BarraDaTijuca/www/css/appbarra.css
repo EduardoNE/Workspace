@@ -13,7 +13,7 @@ body {
 
 body {
     padding-top: 64px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    background: url('../images/bg-app.jpg') top center no-repeat fixed;
+    background: #102a3e url('../images/bg-app.jpg') 0 0 no-repeat fixed;
     background-size: 100%;
 }
 
@@ -210,7 +210,13 @@ body.bhome {
     font-style: none;
 }
 
+/* ----------------------------------
+ SOS
+ --------------------------------- */
 
+.menu.sos {
+    min-height: 108px;
+}
 
 /* ----------------------------------
  GUIA 

@@ -57,7 +57,7 @@
                 $(".js-title").html(post.title); //&#187;
                 $(".js-bread").html(post.categories[0].title);
 
-                if(typeof post.custom_fields.telefone !== 'undefined'){
+                if(typeof post.custom_fields.telefone !== 'undefined' && val.custom_fields.telefone !== 0){
 
                     var tels = post.custom_fields.telefone.toString().replace(" ","").replace(")","").replace("(","0").replace("-","").split(",");
                     $(".js-tel a").attr("href","tel:"+tels[0]);
@@ -70,7 +70,7 @@
                     $(".js-site").css('display','block');
                 }
 
-                if(typeof post.custom_fields.email !== 'undefined' ){
+                if(typeof post.custom_fields.email !== 'undefined' && post.custom_fields.email !== 0 ){
 
                     $(".js-mens a").attr("href","mail:"+post.custom_fields.email[0]);
                     $(".js-mens").css('display','block');

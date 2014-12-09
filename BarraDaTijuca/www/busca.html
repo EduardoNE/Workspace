@@ -29,10 +29,10 @@
 
         $( document ).ready(function() {
             
-            $.getJSON("http://www.barradatijuca.com.br/api/core/get_category_posts/?id="+ GetURLParameter("id"), function( data ) {
+            $.getJSON("http://www.barradatijuca.com.br/api/get_search_results/?search="+ GetURLParameter("search"), function( data ) {
                                         
 
-              $( ".js-title" ).html(data.category.title);
+              $( ".js-title" ).html(GetURLParameter("search"));
               $( ".loading" ).remove();
               var items = [];
               console.log(data);
@@ -46,7 +46,7 @@
                                 '<a href="anunciante.html?id='+val.id+'">';
                                         
                                 var count = 0;
-                if(typeof val.ImagemP.url[3] !== 'undefined')
+                if(typeof val.ImagemP.url[0] !== 'undefined')
                    anuncio += '<img src="'+val.ImagemP.url[0]+'" />';
                 else
                    anuncio += '<img src="images/anuncios.jpg" />';
@@ -58,7 +58,7 @@
                                     '<a href="anunciante.html?id='+val.id+'"><h2>'+val.title+'</h2></a>'+
                                     '<div class="bts">';
 
-                                        if(typeof val.custom_fields.telefone !== 'undefined'){
+                                        if(typeof val.custom_fields.telefone !== 'undefined' && val.custom_fields.telefone !==0){
                                             var tels = val.custom_fields.telefone.toString().replace(" ","").replace(")","").replace("(","0").replace("-","").split(",");
                                             anuncio += '<a href="tel:'+tels[0]+'" class="bt-action"><img src="images/telefone.svg" /></a>';
                                         }
