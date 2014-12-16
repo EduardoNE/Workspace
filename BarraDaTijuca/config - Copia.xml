@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="br.com.barradatijuca" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Barra da Tijuca</name>
+    <description>
+        Aplicativo oficial do bairro e portal Barra da Tijuca.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Apache Cordova Team
+    </author>
+
+    <feature name="Geolocation">
+        <param name="ios-package" value="CDVLocation" />
+        <param name="android-package" value="CDVLocation" />
+    </feature>
+    
+    <content src="index.html" />
+    <access origin="*" />
+</widget>

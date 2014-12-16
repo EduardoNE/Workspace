@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Barra da Tijuca</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/appbarra.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/LocalStorageFunctions.js"></script>
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <script type="text/javascript">
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++){
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam){
+                    return sParameterName[1];
+                }
+            }
+        }
+    </script>
+    
+    <script type="text/javascript"> 
+
+        $( document ).ready(function() {
+
+            
+            $(".js-desc").change(function() {
+                $(".js-desc a").attr( "onclick",'window.open(\''+$(".js-desc a").attr("href")+'\', \'_system\');').attr("href",'#');
+            });
+
+            $.getJSON("http://www.barradatijuca.com.br/api/get_post/?id="+ GetURLParameter("id"), function( data ) {
+                var post = data.post;
+                console.log(post);
+                var favoritado = startLS("favoritos",post.id);
+
+                if(favoritado)
+                    $(".js-desfavoritar").css('display','block');
+                else
+                    $(".js-favoritar").css('display','block');
+
+                $(".js-img").attr("src",post.ImagemP.url[0]);
+                $(".js-desc").html(post.content);
+                $(".js-desc").change();
+                $(".js-title").html(post.title); //&#187;
+                $(".js-bread").html(post.categories[0].title);
+
+                if(typeof post.custom_fields.telefone !== 'undefined' && post.custom_fields.telefone !== 0){
+
+                    var tels = post.custom_fields.telefone.toString().replace(" ","").replace(")","").replace("(","0").replace("-","").split(",");
+                    $(".js-tel a").attr("href","tel:"+tels[0]);
+                    $(".js-tel").css('display','block');
+                }
+
+                if(typeof post.custom_fields.url_site !== 'undefined' && post.custom_fields.url_site[0].indexOf("http://") != -1){
+
+                    $(".js-site a").attr("onclick","window.open('"+post.custom_fields.url_site[0]+"', '_system');");
+                    $(".js-site").css('display','block');
+                }
+
+                if(typeof post.custom_fields.email !== 'undefined' && post.custom_fields.email !== 0 ){
+
+                    $(".js-mens a").attr("href","mail:"+post.custom_fields.email[0]);
+                    $(".js-mens").css('display','block');
+                }
+
+                if(typeof post.custom_fields.cp_google !== 'undefined'){
+
+                    $(".js-end a").attr("href",'mapa.html?addr='+post.custom_fields.cp_google);
+                    $(".js-end").css('display','block');
+
+                }
+
+                if(typeof post.custom_fields.cp_cupom !== 'undefined'){
+
+                    //$(".js-end a").attr("href",'mapa.html?addr='+post.custom_fields.cp_google);
+                    $(".js-cupoms").css('display','block');
+
+                }
+
+                if(typeof post.custom_fields.cp_cupom !== 'undefined' && post.custom_fields.cp_cupom[0] !=0){
+                    
+                    //$(".js-end a").attr("href",'mapa.html?addr='+post.custom_fields.cp_google);
+                    $(".js-cupoms").css('display','block');
+
+                }
+
+                $('.js-favoritar').click(function() {
+                  $(".js-favoritar").css('display','none');
+                  $(".js-desfavoritar").css('display','block');
+
+                  saveLS("favoritos",post.id);
+                });
+
+                $('.js-desfavoritar').click(function() {
+                  $(".js-desfavoritar").css('display','none');
+                  $(".js-favoritar").css('display','block');
+
+                  removeLS("favoritos",post.id);
+                });
+
+
+
+            });
+        });
+    </script>
+
+</head>
+
+<body id="anunciante" class="Bg4All">
+
+    <!-- Navigation --> <!-- altura 44px -->
+    <nav class="navbar navbar-fixed-top text-center" role="navigation">
+        <div class="statusbar"></div> <!-- altura 20px -->
+        <div class="header">
+            <div class="container">
+                <a href="javascript:history.go(-1)" class="bt-voltar pull-left">
+                    <img src="images/bt-voltar.png" />
+                </a>
+                <h1 class="titulo-tela">
+                    <img src="images/logo-barra.png" class="logo-menu" />
+                </h1>
+                <a href="guia.html" class="bt-guia pull-right">
+                    <img src="images/bt-guia.png" />
+                </a>
+            </div>
+        </div>
+        <!-- Barra de Navegação -->
+        <div class="breadcrump">
+            <div class="container js-bread">
+                Gastronomia &#187; Restaurantes &#187; Bares
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- TITULO -->
+    <div class="titulo-anunciante">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="js-title"></h2>
+                    <a href="javascript:void(0);" style="display:none;" class="pull-right bt-favorito js-favoritar">
+                        <img src="images/estrela.svg" />
+                    </a>
+                    <a href="javascript:void(0);" style="display:none;" class="pull-right bt-favorito js-desfavoritar">
+                        <img src="images/estrela-favoritada.svg" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- FIM: TITULO -->
+
+    <!-- TITULO -->
+    <div class="imagem-anunciante">
+        <div class="container">
+            <div class="row">
+                <img class="js-img" src="images/img-anunciante.jpg" />
+            </div>
+        </div>
+    </div>
+    <!-- FIM: TITULO -->
+
+    <!-- DESCRICAO -->
+    <div class="desc-anunciante">
+
+        <div class="container js-desc">
+            
+        </div>
+
+    </div>
+    <!-- FIM: DESCRICAO -->
+
+    <!-- BOTOES -->
+    <div id="bts-acoes">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="bt-acao js-tel" style="display:none;">
+                        <a href="#">
+                            <img src="images/telefone.svg" /> Ligar
+                        </a>
+                    </div>
+                    <div class="bt-acao js-site" style="display:none;">
+                        <a href="#" target="_system">
+                            <img src="images/site.svg" /> Site
+                        </a>
+                    </div>
+                    <div class="bt-acao js-face" style="display:none;">
+                        <a href="#" target="_system">
+                            <img src="images/facebook.svg" /> Facebook
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="bt-acao js-end" style="display:none;">
+                        <a href="#">
+                            <img src="images/mapa.svg" /> Endereço
+                        </a>
+                    </div>
+                    <div class="bt-acao js-mens" style="display:none;">
+                        <a href="#">
+                            <img src="images/email.svg" /> Mensagem
+                        </a>
+                    </div>
+                    <div class="bt-acao js-inst" style="display:none;">
+                        <a href="#">
+                            <img src="images/instagram.svg" /> Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- FIM: BOTOES -->
+
+
+    <!-- HORARIO E CUPOM -->
+    <div id="horario-cupom">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 horario js-horario" style="display:none;">
+                    <div class="relogio"><img src="images/relogio.png" /></div>
+                    <div><p>Seg a Sex: 07h às 00h<br />
+                        Sab e Dom: 08h às 12h</p></div>
+                </div>
+                <div class="col-xs-6 cupom js-cupom" style="display:none;">
+                    <img src="images/cupom.png" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- FIM: HORARIO E DESCONTO -->
+
+
+    <!-- Footer -->
+    <div id="toolbar">
+        <div class="bt minha-barra">
+            <a href="index.html">
+                <img src="images/bt-home.png" />
+                <h3>Home</h3>
+            </a>
+        </div>
+        <div class="bt catraca">
+            <a href="catraca.html">
+                <img src="images/bt-catraca.png" />
+                <h3>Catraca</h3>
+            </a>
+        </div>
+        <div class="bt ao-vivo">
+            <a href="aovivo.html">
+                <img src="images/bt-ao-vivo.png" />
+                <h3>Ao Vivo</h3>
+            </a>
+        </div>
+        <div class="bt favoritos">
+            <a href="favoritos.html">
+                <img src="images/bt-favoritos.png" />
+                <h3>Favoritos</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+
+</body>
+
+</html>

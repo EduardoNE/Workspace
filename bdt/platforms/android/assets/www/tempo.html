@@ -1,0 +1,287 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Barra da Tijuca</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/appbarra.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+    $(function() {
+        $.getJSON( "http://api.openweathermap.org/data/2.5/weather?q=barra%20da%20tijuca,rio%20de%20janeiro,rj,br", function( data ) {
+          
+            //console.log(data);
+            var tempe = parseInt(data.main.temp)-273.15;
+            $(".js-temperatura").html(Math.round(tempe));
+           
+            $(".js-vento").html(Math.round(data.wind.speed));
+            $(".js-pressao").html(Math.round(data.main.pressure));
+            $(".js-nuvens").html(Math.round(data.clouds.all));
+            $(".js-umidade").html(Math.round(data.main.humidity));
+            
+
+            if(data.weather[0].main == 'clouds')
+            $(".js-imgtempo").attr("src","images/prevtempo-nublado.png").attr("alt",data.weather[0].main);
+            else if(data.weather[0].main == 'Rain')
+            $(".js-imgtempo").attr("src","images/prevtempo-chuva-fraca.png").attr("alt",data.weather[0].main);
+            else if(data.weather[0].main == 'Clear')
+            $(".js-imgtempo").attr("src","images/prevtempo-sol.png").attr("alt",data.weather[0].main);
+            else if(data.weather[0].main == 'Thunderstorm')
+            $(".js-imgtempo").attr("src","images/prevtempo-trovoadas.png").attr("alt",data.weather[0].main);
+            else 
+            $(".js-imgtempo").attr("src","images/prevtempo-nublado.png").attr("alt",data.weather[0].main);
+        });
+		$.getJSON( "http://api.openweathermap.org/data/2.5/forecast?q=barra%20da%20tijuca,rio%20de%20janeiro,rj,br", function( data ) {
+          	var d = new Date();
+            var hoje = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+			//console.log(hoje); 
+			var x = 0;
+			var tempmax = 0;
+			var tempmin = 0;
+			var y = 0;
+			$.each( data.list, function( key, value ) {
+			
+			var dayOfWeek = "";
+				var date = value.dt_txt.split(' ');
+				
+				if(date[0] != hoje){
+					
+					if(y != x){
+						y = x;
+						var tempe = parseInt(tempmax)-273.15;
+						$(".js-"+(x)+" .js-tempmax").html(Math.round(tempe));
+						
+						var tempe = parseInt(tempmin)-273.15;
+						$(".js-"+(x)+" .js-tempmin").html(Math.round(tempe));
+						//console.log("**"+tempmax + ": " +tempmin+"**");
+						
+					}
+					tempmax = parseInt(value.main.temp_max);
+					tempmin = parseInt(value.main.temp_min);
+				}
+				else{
+					if(value.main.temp_max > tempmax)
+						tempmax = parseInt(value.main.temp_max);
+						
+					if(value.main.temp_min < tempmin)
+						tempmin = parseInt(value.main.temp_min);
+				}
+				
+				
+				if(date[0] != hoje && date[1] == "00:00:00" && x < 3){
+					hoje = date[0];
+					
+					var dt = new Date(hoje);
+					switch(dt.getDay()) {
+						case 0:
+							dayOfWeek = "Domingo";
+							break;
+						case 1:
+							dayOfWeek = "Segunda";
+							break;
+						case 2:
+							dayOfWeek = "Terça";
+							break;
+						case 3:
+							dayOfWeek = "Quarta";
+							break;
+						case 4:
+							dayOfWeek = "Quinta";
+							break;
+						case 5:
+							dayOfWeek = "Sexta";
+							break;
+						case 6:
+							dayOfWeek = "Sabado";
+							break;
+						default:
+							dayOfWeek = "Error";
+					}
+					
+					dia = (dt.getDate() < 10 ? "0" + dt.getDate() : dt.getDate());
+					
+					mes = (dt.getDate() < 10 ? "0" + dt.getDate() : dt.getDate());
+					
+					var month = new Array();
+					month[0]  = "Janeiro";
+					month[1]  = "Fevereiro";
+					month[2]  = "Março";
+					month[3]  = "Abril";
+					month[4]  = "Maio";
+					month[5]  = "Junho";
+					month[6]  = "Julho";
+					month[7]  = "Agosto";
+					month[8]  = "Setembro";
+					month[9]  = "Outubro";
+					month[10] = "Novembro";
+					month[11] = "Desembro";
+					
+				
+					$(".js-"+(x)+" .js-data").html(dayOfWeek+", "+dia+' '+month[dt.getMonth()]+" de "+dt.getFullYear());
+					
+					x++;
+				}
+				
+			});
+            
+        });
+    });
+	/*
+	http://api.openweathermap.org/data/2.5/weather?q=barra%20da%20tijuca,rio%20de%20janeiro,rj,br
+	http://api.openweathermap.org/data/2.5/forecast?q=barra%20da%20tijuca,rio%20de%20janeiro,rj,br
+	*/
+    </script>
+
+
+</head>
+
+<body class="Bg4All">
+
+    <!-- Navigation --> <!-- altura 44px -->
+    <nav class="navbar navbar-fixed-top text-center" role="navigation">
+        <div class="statusbar"></div> <!-- altura 20px -->
+        <div class="header">
+            <div class="container">
+                <span class="bt-voltar pull-left"><a href="javascript:history.go(-1);"><img src="images/bt-voltar.png" /></a></span>
+                <h1 class="titulo-tela">Tempo</h1>
+                <a href="guia.html" class="bt-guia pull-right">
+                    <img src="images/bt-guia.png" />
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="temp" class="content">
+
+        <div class="container text-center">
+            <div class="temp-hoje">
+                <div class="temp js-temperatura">00</div>
+                <div class="c">&deg; c</div>
+                <div class="img-temp"><img class="js-imgtempo" src="images/prevtempo-sol.png" /></div>
+            </div>
+            <div class="local-temp text-center">Barra da Tijuca - RJ</div>
+        </div>
+
+        <div class="container infos-temp">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="t-vento">Vento: <spam class="js-vento">00</spam> m/s</div>
+                    <div class="t-pressao">Pressão: <spam class="js-pressao">00</spam>hpa</div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="t-nuvens">Nuvens: <spam class="js-nuvens">00</spam>%</div>
+                    <div class="t-umidade">Umidade: <spam class="js-umidade">00</spam>%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container infos-dias-anteriores js-1">
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="seta"><img src="images/seta.svg" /></div>
+                    <div class="temp js-tempmax">00</div>
+                    <div class="c">&deg; c</div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="seta baixo"><img src="images/seta.svg" /></div>
+                    <div class="temp js-tempmin">00</div>
+                    <div class="c">&deg; c</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 data-completa js-data">Terça-feira, 11 de Novembro</div>
+            </div>
+        </div>
+
+        <div class="container"><hr></div>
+
+        <div class="container infos-dias-anteriores js-2">
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="seta"><img src="images/seta.svg" /></div>
+                    <div class="temp js-tempmax">00</div>
+                    <div class="c">&deg; c</div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="seta baixo"><img src="images/seta.svg" /></div>
+                    <div class="temp js-tempmin">00</div>
+                    <div class="c">&deg; c</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 data-completa js-data">Terça-feira, 11 de Novembro</div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Footer -->
+    <div id="toolbar">
+        <div class="bt minha-barra">
+            <a href="index.html">
+                <img src="images/bt-home.png" />
+                <h3>Home</h3>
+            </a>
+        </div>
+        <div class="bt catraca">
+            <a href="catraca.html">
+                <img src="images/bt-catraca.png" />
+                <h3>Catraca</h3>
+            </a>
+        </div>
+        <div class="bt ao-vivo">
+            <a href="aovivo.html">
+                <img src="images/bt-ao-vivo.png" />
+                <h3>Ao Vivo</h3>
+            </a>
+        </div>
+        <div class="bt favoritos">
+            <a href="favoritos.html">
+                <img src="images/bt-favoritos.png" />
+                <h3>Favoritos</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+
+</body>
+
+</html>

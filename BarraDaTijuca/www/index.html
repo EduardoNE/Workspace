@@ -20,19 +20,44 @@
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script>
+    $( document ).ready(function() {
+        var random = Math.floor((Math.random() * 100000000) + 1);
+        $.getJSON("http://www.barradatijuca.com.br/api/get_page/?slug=app-painel&randomnumber="+random, function( data ) {
+            //console.log(data.page.attachments);
+            var items = [];
+            $.each($(data.page.attachments), function( key, val ) {
+               // console.log(val);
+                items.push("<div class=\" item \">"+
+                                "<div class=\"fill\" style=\"background-image:url('"+val.url+"');\"></div>"+
+                                "<div class=\"carousel-caption\">"+
+                                    "<h2>"+val.title+"</h2>"+
+                                "</div>"+
+                            "</div>" );
+            });
+            
+           //*/
+            $(".loading").remove();
+
+            $( "<div/>", {
+                "class": "carousel-inner",
+                html: items.join( "" )
+              }).appendTo( ".js-carousel" );
+            //*/
+
+
+            $(".js-carousel .item").first().addClass("active");
+        });
+    });
+    </script>
 
 </head>
 
-<body>
-
+<body class="Bg4All">
     <!-- Navigation --> <!-- altura 44px -->
     <nav class="navbar navbar-fixed-top text-center" role="navigation">
         <div class="statusbar"></div> <!-- altura 20px -->
@@ -44,45 +69,10 @@
     </nav>
 
     <!-- Header Carousel -->
-    <header id="myCarousel" class="carousel slide">
-        <!-- BOLINHAS 
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        -->
-
-        <!-- SLIDES -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <div class="fill" style="background-image:url('images/slide1.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2>Arctic Monkeys</h2>
-                </div>
-            </div>
-            <div class="item">
-                <div class="fill" style="background-image:url('images/slide2.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2>Night Run</h2>
-                </div>
-            </div>
-            <div class="item">
-                <div class="fill" style="background-image:url('images/slide3.jpg');"></div>
-                <div class="carousel-caption">
-                    <h2>Paulo Gustavo</h2>
-                </div>
-            </div>
+    <header id="myCarousel" class="carousel slide js-carousel">
+        <div class="loading text-center">
+            <img src="images/loading.gif">
         </div>
-
-        <!-- SETAS 
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="icon-prev"></span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="icon-next"></span>
-        </a>
-        -->
     </header>
 
     <!-- Page Content -->
@@ -100,7 +90,7 @@
             </div>
             <div class="col-xs-4">
                 <div class="menu agenda">
-                    <a href="agenda.html">
+                    <a href="pre-agenda.html">
                         <img src="images/icone-agenda.png" />
                         <h2>Agenda</h2>
                     </a>
@@ -110,7 +100,7 @@
                 <div class="menu noticias">
                     <a href="noticias.html">
                         <img src="images/icone-noticias.png" />
-                        <h2>Notícias</h2>
+                        <h2>News</h2>
                     </a>
                 </div>
             </div>
@@ -136,7 +126,7 @@
                 <div class="menu transportes">
                     <a href="transporte.html">
                         <img src="images/icone-transportes.png" />
-                        <h2>Transportes</h2>
+                        <h2>Bus</h2>
                     </a>
                 </div>
             </div>
@@ -159,13 +149,23 @@
                 </div>
             </div>
             <div class="col-xs-4">
+                <div class="menu apps">
+                    <a href="apps.html">
+                        <img src="images/icone-apps.png" />
+                        <h2>Apps</h2>
+                    </a>
+                </div>
+            </div>
+            <!--
+            <div class="col-xs-4">
                 <div class="menu transito">
-                    <a href="ultimas-rotas.html">
+                    <a href="catraca.html">
                         <img src="images/icone-transito.png" />
                         <h2>Trânsito</h2>
                     </a>
                 </div>
             </div>
+            -->
         </div>
         <!-- /.row -->
 
@@ -180,12 +180,12 @@
                 <h3>Home</h3>
             </a>
         </div>
-        <div class="bt sugestao">
-            <a href="ultimas-rotas.html">
-                <img src="images/bt-sugestao.png" />
-                <h3>Trânsito</h3>
+        <div class="bt catraca">
+            <a href="catraca.html">
+                <img src="images/bt-catraca.png" />
+                <h3>Catraca</h3>
             </a>
-        </div>
+        </div> 
         <div class="bt ao-vivo">
             <a href="aovivo.html">
                 <img src="images/bt-ao-vivo.png" />
@@ -200,8 +200,7 @@
         </div>
     </div>
 
-    <!-- jQuery Version 1.11.0 -->
-    <script src="js/jquery-1.11.0.js"></script>
+    
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>

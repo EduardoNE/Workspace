@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Barra da Tijuca</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/appbarra.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+    <script>
+    $( document ).ready(function() {
+        $.getJSON("http://www.barradatijuca.com.br/api/get_page/?slug=app-painel", function( data ) {
+            //console.log(data.page.attachments);
+            var items = [];
+            $.each($(data.page.attachments), function( key, val ) {
+               // console.log(val);
+                items.push("<div class=\" item \">"+
+                                "<div class=\"fill\" style=\"background-image:url('"+val.url+"');\"></div>"+
+                                "<div class=\"carousel-caption\">"+
+                                    "<h2>"+val.title+"</h2>"+
+                                "</div>"+
+                            "</div>" );
+            });
+            
+           //*/
+            $(".loading").remove();
+
+            $( "<div/>", {
+                "class": "carousel-inner",
+                html: items.join( "" )
+              }).appendTo( ".js-carousel" );
+            //*/
+
+
+            $(".js-carousel .item").first().addClass("active");
+        });
+    });
+    </script>
+
+</head>
+
+<body class="Bg4All">
+    <!-- Navigation --> <!-- altura 44px -->
+    <nav class="navbar navbar-fixed-top text-center" role="navigation">
+        <div class="statusbar"></div> <!-- altura 20px -->
+        <div class="header">
+            <div class="container">
+                <img src="images/logo-barra.png" class="logo" />
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Carousel -->
+    <header id="myCarousel" class="carousel slide js-carousel">
+        <div class="loading text-center">
+            <img src="images/loading.gif">
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div id="home" class="container">
+
+        <!-- MENU -->
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="menu guia">
+                    <a href="guia.html">
+                        <img src="images/icone-guia.png" />
+                        <h2>Guia</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu agenda">
+                    <a href="pre-agenda.html">
+                        <img src="images/icone-agenda.png" />
+                        <h2>Agenda</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu noticias">
+                    <a href="noticias.html">
+                        <img src="images/icone-noticias.png" />
+                        <h2>News</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="menu delivery">
+                    <a href="delivery.html">
+                        <img src="images/icone-delivery.png" />
+                        <h2>Delivery</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu tempo">
+                    <a href="tempo.html">
+                        <img src="images/icone-tempo.png" />
+                        <h2>Tempo</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu transportes">
+                    <a href="transporte.html">
+                        <img src="images/icone-transportes.png" />
+                        <h2>Bus</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="menu sos">
+                    <a href="sos.html">
+                        <img src="images/icone-sos.png" />
+                        <h2>SOS</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu instabarra">
+                    <a href="instabarra.html">
+                        <img src="images/icone-instabarra.png" />
+                        <h2>InstaBarra</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="menu apps">
+                    <a href="apps.html">
+                        <img src="images/icone-apps.png" />
+                        <h2>Apps</h2>
+                    </a>
+                </div>
+            </div>
+            <!--
+            <div class="col-xs-4">
+                <div class="menu transito">
+                    <a href="catraca.html">
+                        <img src="images/icone-transito.png" />
+                        <h2>Trânsito</h2>
+                    </a>
+                </div>
+            </div>
+            -->
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <div id="toolbar">
+        <div class="bt minha-barra">
+            <a href="index.html">
+                <img src="images/bt-home.png" />
+                <h3>Home</h3>
+            </a>
+        </div>
+        <div class="bt catraca">
+            <a href="catraca.html">
+                <img src="images/bt-catraca.png" />
+                <h3>Catraca</h3>
+            </a>
+        </div> 
+        <div class="bt ao-vivo">
+            <a href="aovivo.html">
+                <img src="images/bt-ao-vivo.png" />
+                <h3>Ao Vivo</h3>
+            </a>
+        </div>
+        <div class="bt favoritos">
+            <a href="favoritos.html">
+                <img src="images/bt-favoritos.png" />
+                <h3>Favoritos</h3>
+            </a>
+        </div>
+    </div>
+
+    
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+
+</body>
+
+</html>

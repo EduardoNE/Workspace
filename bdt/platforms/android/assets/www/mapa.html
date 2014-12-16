@@ -1,0 +1,196 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Barra da Tijuca</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/appbarra.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    
+    <script type="text/javascript">
+        
+        function GetURLParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++){
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam){
+                    return sParameterName[1];
+                }
+            }
+        }
+    </script>
+    
+    <script>
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see a blank space instead of the map, this
+// is probably because you have denied permission for location sharing.
+
+var map;
+var geocoder;
+var text = "Você";
+
+function initialize() {
+    var addr = decodeURIComponent(GetURLParameter('addr'));
+
+geocoder = new google.maps.Geocoder();
+  var mapOptions = {
+    zoom: 12
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  // Try HTML5 geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+
+      var infowindow = new google.maps.InfoWindow({
+        map: map,
+        position: pos,
+        content: text
+      });
+
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+
+   codeAddress(addr);
+}
+function codeAddress(addr) {
+    var address = addr;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+function handleNoGeolocation(errorFlag) {
+    text = "Terminal Alvorada";
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(-23.00037, -43.36590),
+    content: text
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+.select-transito span, .ui-loader.ui-corner-all.ui-body-a.ui-loader-default{ display:none; }
+</style>
+</head>
+<style>
+      #map-canvas {
+        height: 400px;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+<body class="Bg4All">
+
+    <!-- Navigation --> <!-- altura 44px -->
+    <nav class="navbar navbar-fixed-top text-center" role="navigation">
+        <div class="statusbar"></div> <!-- altura 20px -->
+        <div class="header">
+            <div class="container">
+                <span class="bt-voltar pull-left"><a href="javascript:history.go(-1);"><img src="images/bt-voltar.png" /></a></span>
+                <h1 class="titulo-tela">Mapa</h1>
+                <span class="bt-guia pull-right"><img src="images/bt-guia.png" /></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Caixas de trajeto-->
+    <div class="content">
+        <div class="container">
+           	<div style="padding:1em;">
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+    </div>
+    <!-- FIM: Caixas de trajeto -->
+
+    <!-- Footer -->
+    <div id="toolbar">
+        <div class="bt minha-barra">
+            <a href="index.html">
+                <img src="images/bt-home.png" />
+                <h3>Home</h3>
+            </a>
+        </div>
+        <div class="bt catraca">
+            <a href="catraca.html">
+                <img src="images/bt-catraca.png" />
+                <h3>Catraca</h3>
+            </a>
+        </div>
+        <div class="bt ao-vivo">
+            <a href="aovivo.html">
+                <img src="images/bt-ao-vivo.png" />
+                <h3>Ao Vivo</h3>
+            </a>
+        </div>
+        <div class="bt favoritos">
+            <a href="favoritos.html">
+                <img src="images/bt-favoritos.png" />
+                <h3>Favoritos</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+
+
+</body>
+
+</html>
